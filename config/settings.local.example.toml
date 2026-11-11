@@ -1,0 +1,39 @@
+# HEATWATCH - your own paths (template)
+#
+# How to use:
+#   1. Copy this file to   config/settings.local.toml   (same folder).
+#   2. Replace the example paths below with the folders on your own computer / network drive.
+#   3. settings.local.toml is in .gitignore: it is never pushed to GitHub. Do not commit real paths.
+#
+# Expected folder layout (names in <> are yours to choose):
+#
+#   <HEATWATCH>/
+#   ├── brand overview.xlsx            -> brand_file
+#   └── data/
+#       ├── raw/                       -> raw_root    (raw watch exports, as delivered)
+#       │   ├── Rotterdam Marathon/    top-level folder names must match [output_groups] in settings.toml
+#       │   │   └── .../A07/           one folder per study number, at most [search] max_depth levels deep
+#       │   ├── CPC/
+#       │   ├── Gezonde Lopers/
+#       │   └── questionnaires.xlsx    -> questionnaire_file
+#       ├── interim/                   -> data_root  
+#       └── processed/                 -> output_root 
+#
+# The interim and processed folders are created/filled by the pipeline; raw data and the
+# Excel files must be there before you run it.
+
+[paths]
+# Excel with one row per participant (study number, brand, 'Run' column).
+brand_file         = 'C:\path\to\HEATWATCH\brand overview.xlsx'
+
+# Folder with the raw exports.
+raw_root           = 'C:\path\to\HEATWATCH\data\raw'
+
+# Folder with the interim data.
+data_root          = 'C:\path\to\HEATWATCH\data\interim'
+
+# Optional: questionnaire Excel. Remove or comment out this line to skip the questionnaires.
+questionnaire_file = 'C:\path\to\HEATWATCH\data\raw\questionnaires.xlsx'
+
+# Folder where all processed output is written.
+output_root        = 'C:\path\to\HEATWATCH\data\processed'

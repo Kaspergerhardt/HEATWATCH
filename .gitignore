@@ -1,0 +1,16 @@
+# Your own paths (copy config/settings.local.example.toml to create it)
+config/settings.local.toml
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Never commit study data or outputs
+*.xlsx
+*.csv
+*.pkl

@@ -1,0 +1,81 @@
+# HEATWATCH - study settings
+# Your own paths go in settings.local.toml.
+
+# ---------------------------------------------------------------------------------------------- study
+# Race dates. The keys (MR, CPC) are the names used in the 'Run' column of the brand overview.
+[races]
+MR  = 2026-04-12   # Rotterdam Marathon
+CPC = 2026-03-15   # CPC run
+
+# City of each race. 
+[race_city]
+MR  = "Rotterdam"
+CPC = "Den Haag"
+
+# Study number prefix -> group. HR runners take their race(s)
+# from the 'Run' column.
+[groups]
+CPCP = { group = "CPCP", population = "pacer",   race = "CPC" }
+CPC  = { group = "CPC",  population = "patient", race = "CPC" }
+RMP  = { group = "RMP",  population = "pacer",   race = "MR" }
+HR   = { group = "HR",   population = "healthy", race = "" }
+A    = { group = "RM",   population = "patient", race = "MR" }
+C    = { group = "RM",   population = "patient", race = "MR" }
+K    = { group = "RM",   population = "patient", race = "MR" }
+S    = { group = "RM",   population = "patient", race = "MR" }
+
+# Data window: <months_before> months before the (first) race up to and including the (last) race.
+# Step 03 cuts the raw exports (raw_root) to this window -> data_root (interim). 
+[window]
+months_before = 3
+
+# ---------------------------------------------------------------------------------------------- input
+[brand_file]
+sheet = "count"
+
+# How many folder levels below data_root / raw_root to look for a study number folder
+# (3 covers e.g. raw\Rotterdam Marathon\36 KM\A07).
+[search]
+max_depth = 3
+
+# Folder in interim per top-level folder in raw_root (step 03: raw\Rotterdam Marathon\..\A07 -> interim\MR\A07)
+[output_groups]
+"Rotterdam Marathon" = "MR"
+"Gezonde Lopers"     = "Gezonde Lopers"
+"CPC"                = "CPC"
+
+# ---------------------------------------------------------------------------------------------- processing
+[processing]
+local_timezone      = "Europe/Amsterdam"
+stream_seconds      = 5      # within-training resolution (Apple HR: 1 value per 5 s)
+duplicate_tolerance = 120    # s; same run in Garmin Connect .csv and .fit if the starts differ <= this
+merge_gap           = 120    # s; a run starting <= this after the end of the previous one = the same training
+
+# WBGT / hittekracht per training from Open-Meteo weather (start time + start position).
+# Starts within grid_deg degrees share one download (0.02 = about 2 km)
+[weather]
+enabled          = true
+url              = "https://historical-forecast-api.open-meteo.com/v1/forecast"
+grid_deg         = 0.02
+indoor_temp_c    = 19.5
+indoor_rh_pct    = 40
+indoor_air_speed = 0.2     # m/s
+
+# Heat dose per training: HD = duration * effort * max(0, WBGT_mean - wbgt_threshold) (dataset and analysis).
+wbgt_threshold   = 14      # degC WBGT, lower limit of the KNMI heat-stress scale
+
+# Exclusions that only you know. study number = ["outcome", "reason"]
+[exclusion]
+HR132 = ["Export could not be opened", "Full export not possible"]
+HR294 = ["Race not part of the study", "Berlin & Utrecht"]
+HR216 = ["Export could not be opened", "Full export not possible"]
+HR247 = ["Export could not be opened", "Full export not possible"]
+HR209 = ["No relevant data in export", "Samsung: no relevant information"]
+HR297 = ["No relevant data in export", "No data"]
+CPCP1 = ["No data of the race", "Data until 2026-02-22"]
+K04   = ["No data of the race", "Data until 2026-04-03"]
+C21   = ["No relevant data in export", "No activity data"]
+CPCP5 = ["Export could not be opened", "Full export not possible"]
+K01   = ["Export could not be opened", "Full export not possible"]
+RMP14 = ["No running activity in study period", "Data 2026-04-23 - 2026-05-12, after the race"]
+
