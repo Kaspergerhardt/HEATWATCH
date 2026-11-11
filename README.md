@@ -1,8 +1,6 @@
 # HEATWATCH dataset
 
-Smartwatch exports per study number → one dataset (participants, trainings, 5-s data) with location,
-WBGT per training, a data check and the inclusion / exclusion overview.
-Only study numbers are stored: no names, file names or paths.
+Smartwatch exports per study number → one dataset. Includes acclimatization and heatmap analysis.
 
 ## Folders
 
